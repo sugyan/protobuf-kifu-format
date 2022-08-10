@@ -1,0 +1,231 @@
+syntax = "proto3";
+
+message Kifu {
+  map<string, string> header = 1;
+  Initial initial = 2;
+  repeated Move moves = 3;
+}
+
+enum Color {
+  COLOR_NONE = 0;
+  BLACK = 1;
+  WHITE = 2;
+}
+
+enum PieceKind {
+  PIECE_KIND_NONE = 0;
+  FU = 1;
+  KY = 2;
+  KE = 3;
+  GI = 4;
+  KI = 5;
+  KA = 6;
+  HI = 7;
+  OU = 8;
+  TO = 9;
+  NY = 10;
+  NK = 11;
+  NG = 12;
+  UM = 13;
+  RY = 14;
+}
+
+message Piece {
+  Color color = 1;
+  PieceKind kind = 2;
+}
+
+message Square {
+  uint32 file = 1;
+  uint32 rank = 2;
+}
+
+message Initial {
+  enum Preset {
+    PRESET_HIRATE = 0;
+    PRESET_KY = 1;
+    PRESET_KY_R = 2;
+    PRESET_KA = 3;
+    PRESET_HI = 4;
+    PRESET_HIKY = 5;
+    PRESET_2 = 6;
+    PRESET_4 = 7;
+    PRESET_6 = 8;
+    PRESET_8 = 9;
+    PRESET_10 = 10;
+  }
+  message State {
+    message Board {
+      Piece sq11 = 1;
+      Piece sq12 = 2;
+      Piece sq13 = 3;
+      Piece sq14 = 4;
+      Piece sq15 = 5;
+      Piece sq16 = 6;
+      Piece sq17 = 7;
+      Piece sq18 = 8;
+      Piece sq19 = 9;
+      Piece sq21 = 10;
+      Piece sq22 = 11;
+      Piece sq23 = 12;
+      Piece sq24 = 13;
+      Piece sq25 = 14;
+      Piece sq26 = 15;
+      Piece sq27 = 16;
+      Piece sq28 = 17;
+      Piece sq29 = 18;
+      Piece sq31 = 19;
+      Piece sq32 = 20;
+      Piece sq33 = 21;
+      Piece sq34 = 22;
+      Piece sq35 = 23;
+      Piece sq36 = 24;
+      Piece sq37 = 25;
+      Piece sq38 = 26;
+      Piece sq39 = 27;
+      Piece sq41 = 28;
+      Piece sq42 = 29;
+      Piece sq43 = 30;
+      Piece sq44 = 31;
+      Piece sq45 = 32;
+      Piece sq46 = 33;
+      Piece sq47 = 34;
+      Piece sq48 = 35;
+      Piece sq49 = 36;
+      Piece sq51 = 37;
+      Piece sq52 = 38;
+      Piece sq53 = 39;
+      Piece sq54 = 40;
+      Piece sq55 = 41;
+      Piece sq56 = 42;
+      Piece sq57 = 43;
+      Piece sq58 = 44;
+      Piece sq59 = 45;
+      Piece sq61 = 46;
+      Piece sq62 = 47;
+      Piece sq63 = 48;
+      Piece sq64 = 49;
+      Piece sq65 = 50;
+      Piece sq66 = 51;
+      Piece sq67 = 52;
+      Piece sq68 = 53;
+      Piece sq69 = 54;
+      Piece sq71 = 55;
+      Piece sq72 = 56;
+      Piece sq73 = 57;
+      Piece sq74 = 58;
+      Piece sq75 = 59;
+      Piece sq76 = 60;
+      Piece sq77 = 61;
+      Piece sq78 = 62;
+      Piece sq79 = 63;
+      Piece sq81 = 64;
+      Piece sq82 = 65;
+      Piece sq83 = 66;
+      Piece sq84 = 67;
+      Piece sq85 = 68;
+      Piece sq86 = 69;
+      Piece sq87 = 70;
+      Piece sq88 = 71;
+      Piece sq89 = 72;
+      Piece sq91 = 73;
+      Piece sq92 = 74;
+      Piece sq93 = 75;
+      Piece sq94 = 76;
+      Piece sq95 = 77;
+      Piece sq96 = 78;
+      Piece sq97 = 79;
+      Piece sq98 = 80;
+      Piece sq99 = 81;
+    }
+    message Hand {
+      uint32 fu = 1 [json_name = "FU"];
+      uint32 ky = 2 [json_name = "KY"];
+      uint32 ke = 3 [json_name = "KE"];
+      uint32 gi = 4 [json_name = "GI"];
+      uint32 ki = 5 [json_name = "KI"];
+      uint32 ka = 6 [json_name = "KA"];
+      uint32 hi = 7 [json_name = "HI"];
+    }
+    message Hands {
+      Hand black = 1;
+      Hand white = 2;
+    }
+    Color color = 1;
+    Board board = 2;
+    Hands hands = 3;
+  }
+  oneof preset_or_state {
+    Initial.Preset preset = 1;
+    Initial.State state = 2;
+  }
+}
+
+message Move {
+  enum Relative {
+    RELATIVE_NONE = 0;
+    L = 1;
+    C = 2;
+    R = 3;
+    U = 4;
+    M = 5;
+    D = 6;
+    LU = 7;
+    LM = 8;
+    LD = 9;
+    RU = 10;
+    RM = 11;
+    RD = 12;
+    H = 13;
+  }
+  message Normal {
+    Color color = 1;
+    Square from = 2;
+    Square to = 3;
+    PieceKind piece_kind = 4;
+    bool same = 5;
+    bool promote = 6;
+    PieceKind capture = 7;
+    Relative relative = 8;
+  }
+  message Drop {
+    Color color = 1;
+    reserved 2;
+    Square to = 3;
+    PieceKind piece_kind = 4;
+    reserved 5, 6, 7;
+    Relative relative = 8;
+  }
+  enum Special {
+    SPECIAL_NONE = 0;
+    TORYO = 1;
+    CHUDAN = 2;
+    SENNICHITE = 3;
+    TIME_UP = 4;
+    ILLEGAL_MOVE = 5;
+    ILLEGAL_ACTION_BLACK = 6;
+    ILLEGAL_ACTION_WHITE = 7;
+    JISHOGI = 8;
+    KACHI = 9;
+    HIKIWAKE = 10;
+    MATTA = 11;
+    TSUMI = 12;
+    FUZUMI = 13;
+    ERROR = 14;
+  }
+  message Time {
+    uint32 now = 1;
+    uint32 total = 2;
+  }
+  message Forks {
+    repeated Move fork = 1;
+  }
+  oneof move_or_special {
+    Normal normal = 1;
+    Drop drop = 2;
+    Special special = 3;
+  }
+  repeated string comments = 4;
+  Time time = 5;
+  repeated Forks forks = 6;
+}
