@@ -183,18 +183,17 @@ message Move {
     Square from = 2;
     Square to = 3;
     PieceKind piece_kind = 4;
-    bool same = 5;
-    bool promote = 6;
-    PieceKind capture = 7;
-    Relative relative = 8;
+    optional bool promote = 5;
+    PieceKind capture = 6;
+    Relative relative = 7;
   }
   message Drop {
     Color color = 1;
     reserved 2;
     Square to = 3;
     PieceKind piece_kind = 4;
-    reserved 5, 6, 7;
-    Relative relative = 8;
+    reserved 5, 6;
+    Relative relative = 7;
   }
   enum Special {
     SPECIAL_NONE = 0;
