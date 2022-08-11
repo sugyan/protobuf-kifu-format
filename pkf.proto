@@ -155,7 +155,7 @@ message Initial {
     Board board = 2;
     Hands hands = 3;
   }
-  oneof preset_or_state {
+  oneof position {
     Initial.Preset preset = 1;
     Initial.State state = 2;
   }
@@ -220,7 +220,7 @@ message Move {
   message Forks {
     repeated Move fork = 1;
   }
-  oneof move_or_special {
+  oneof action {
     Normal normal = 1;
     Drop drop = 2;
     Special special = 3;
